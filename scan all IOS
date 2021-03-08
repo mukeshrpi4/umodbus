@@ -1,0 +1,29 @@
+import socket       
+from umodbus import 
+from umodbus.client 
+                    
+# Enable values to b
+conf.SIGNED_VALUES =
+                    
+sock = socket.socket
+sock.connect(('192.1
+                    
+# Returns a message 
+# Modbus TCP/IP.    
+do = tcp.write_multi
+response = tcp.send_
+print("response",res
+                    
+DI= tcp.read_discret
+response = tcp.send_
+print("DI length",le
+                    
+ai=tcp.read_input_re
+response=tcp.send_me
+print("ai len is",le
+                    
+ao = tcp.write_singl
+aoans = tcp.send_mes
+print("ao value is",
+                    
+sock.close()        
