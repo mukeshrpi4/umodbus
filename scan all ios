@@ -1,0 +1,29 @@
+import socket
+from umodbus import conf
+from umodbus.client import tcp
+
+# Enable values to be signed (default is False).
+conf.SIGNED_VALUES = True
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect(('192.168.1.1', 502))
+
+# Returns a message or Application Data Unit (ADU) specific for doing
+# Modbus TCP/IP.
+do = tcp.write_multiple_coils(1, 0, [1, 1, 0, 1,0,0])
+response = tcp.send_message(do, sock)  # Response depends on Modbus function code. This particular returns the amount of coils written, in this case it is.
+print("response",response,"ADU for DO ",do)
+
+DI= tcp.read_discrete_inputs(1,0,8)
+response = tcp.send_message(DI, sock)
+print("DI length",len(DI), response)
+
+ai=tcp.read_input_registers(1,0,4)
+response=tcp.send_message(ai,sock)
+print("ai len is",len(ai)," response value is",response)
+
+ao = tcp.write_single_register(1, 1, 0xffff)    # 4 to 20 ma range is from 10000 to
+aoans = tcp.send_message(ao, sock)
+print("ao value is",ao,"aoans is ",aoans)
+
+sock.close()
